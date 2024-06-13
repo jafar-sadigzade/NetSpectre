@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: gunicorn netspectre.wsgi:application --bind 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    env_file:
+      - .envs/.django
+      - .envs/.database
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+
+  db:
+    image: postgres:13
+    env_file:
+      - .envs/.database
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+
+  celery:
+    build: .
+    command: celery -A netspectre worker --loglevel=info
+    env_file:
+      - .envs/.django
+      - .envs/.database
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:
+  static_volume:

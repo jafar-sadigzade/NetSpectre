@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scan Results</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'scanner/styles.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Scan Results</h2>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Target Network: {{ scan.target_network }}</h5>
+                <p class="card-text"><strong>Scan Type:</strong> {{ scan.get_scan_type_display }}</p>
+                <p class="card-text"><strong>Scan Results:</strong></p>
+                <pre class="card-text">{{ scan.scan_results }}</pre>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
